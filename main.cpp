@@ -1,27 +1,39 @@
 #include <iostream>
 #include <threepp/threepp.hpp>
 
+#include "threepp/materials/LineBasicMaterial.hpp"
 //#include "cmake-build-debug/_deps/assimp-src/code/AssetLib/Blender/BlenderDNA.h"
 #include "threepp/loaders/AssimpLoader.hpp"
+#include "threepp/loaders/OBJLoader.hpp"
 
 int main() {
     using namespace threepp;
     Canvas canvas;
     GLRenderer renderer(canvas.size());
 
-    AssimpLoader loader;
-   // auto geometry = loader.load("Tank.glb");
+    PerspectiveCamera camera(45, canvas.aspect(), 0.1, 10000);
+    camera.position.set(0, 6, -10);
+
+    OrbitControls controls{camera, canvas};
+
+    auto ambientLight = AmbientLight::create(0xffffff, 0.5f);
+    STLLoader loader;
+
+    auto geometry = loader.load("../assets/Tank3.stl");
+    auto material = MeshStandardMaterial::create({{"color", Color::red}});
+    auto tank = Mesh::create(geometry, material);
+    tank->scale *= 0.001;
 
     std::cout <<std::filesystem::current_path();
 
     //For kameraet
-    PerspectiveCamera camera(60.0, canvas.aspect(), 0.1, 1000.0);
-    camera.position.z = 15;
    // camera.lookAt({x:0, y:0, z:0}());
 
     //For å lage scenen
     auto scene = Scene::create();
     scene->background = Color::aliceblue;
+    scene->add(tank);
+    scene->add(ambientLight);
 
 
     KeyListener listener;
@@ -41,4 +53,4 @@ int main() {
         renderer.clear();
                 renderer.render(*scene, camera);
             });
-} */
+}*/
