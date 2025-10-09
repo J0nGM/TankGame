@@ -1,0 +1,39 @@
+cmake_minimum_required(VERSION 3.16)
+project(Tank LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+include(FetchContent)
+
+set(THREEPP_BUILD_TESTS OFF)
+set(THREEPP_BUILD_EXAMPLES OFF)
+set(THREEPP_USE_ASSIMP ON)
+
+FetchContent_Declare(
+        threepp
+        GIT_REPOSITORY https://github.com/markaren/threepp.git
+        GIT_TAG 619cdaacc2e7dc6ea709d8c7f482e2994af7349d
+)
+FetchContent_MakeAvailable(threepp)
+
+include(FetchContent)
+
+set(ASSIMP_BUILD_TESTS OFF)
+set(ASSIMP_INSTALL OFF)
+FetchContent_Declare(
+        assimp
+        GIT_REPOSITORY https://github.com/assimp/assimp.git
+        GIT_TAG v6.0.2
+)
+FetchContent_MakeAvailable(assimp)
+
+
+add_subdirectory(src)
+add_executable(TankSim main.cpp
+        include/keyControlls.hpp)
+
+target_link_libraries(TankSim PUBLIC TankLib)
+
+
+file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
