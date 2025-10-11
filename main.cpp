@@ -13,18 +13,13 @@ int main() {
     AssimpLoader loader;
    // auto geometry = loader.load("Tank.glb");
 
-    auto ambientLight = AmbientLight::create(0xffffff, 0.5f);
 
-
-    std::cout <<std::filesystem::current_path();
-
-    //For kameraet
+    //Kameret
     PerspectiveCamera camera(45, canvas.aspect(), 0.1, 10000);
     camera.position.set(0, 6, -10);
     OrbitControls controls{camera, canvas};
-   // camera.lookAt({x:0, y:0, z:0}());
 
-    //For å lage scenen
+
     auto scene = Scene::create();
     scene->background = Color::aliceblue;
 
@@ -38,6 +33,7 @@ int main() {
     groundMesh ->receiveShadow = true;
     scene->add(groundMesh);
 
+    //Har ikke gjort noe med dette ennå
     KeyListener listener;
     canvas.addKeyListener(listener);
 
