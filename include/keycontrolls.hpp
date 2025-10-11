@@ -14,10 +14,9 @@
 using namespace threepp;
 
 
-class key_controller: public KeyListener {
+class keycontrolls: public KeyListener {
 
-public:
-    key_controller(Object3D& obj)
+public:keycontrolls(Object3D& obj)
         : obj_(&obj) {}
     void onKeyPressed(KeyEvent evt) override {
         if (evt.key == Key::W) {
@@ -58,14 +57,21 @@ public:
             obj_->rotateY(angularSpeed_*dt);
         }
     }
+private:
+    //Gir indikasjon på hvilken knapp som er trykket inn
+    struct KeyState {
+        bool up = false;
+        bool down = false;
+        bool left = false;
+        bool right = false;
+    } keyState_;
 
-
-
+    Object3D* obj_;
+    float speed_ = 5.0f; //Farten på W/S
+    float angularSpeed_ = 2.0f; //Farten på A/D
 };
 
 
-
-#endif //TANK_KEYCONTROLLS_HPP
 
 
 #endif //TANK_KEYCONTROLLS_HPP

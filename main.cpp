@@ -3,6 +3,7 @@
 #include "tank.hpp"
 #include "threepp/materials/LineBasicMaterial.hpp"
 //#include "cmake-build-debug/_deps/assimp-src/code/AssetLib/Blender/BlenderDNA.h"
+#include "keycontrolls.hpp"
 #include "landscape.hpp"
 #include "threepp/loaders/AssimpLoader.hpp"
 #include "threepp/loaders/OBJLoader.hpp"
@@ -16,24 +17,21 @@ int main() {
     camera.position.set(0, 6, -10);
     OrbitControls controls{camera, canvas};
 
-    //Laster inn STL filen
 
-
+    //Legger til lys
+    auto light = HemisphereLight::create(0xffffbb, 0x080820);
 
     std::cout << std::filesystem::current_path();
 
     //For å lage scenen
     auto scene = Scene::create();
     scene->background = Color::aliceblue;
-
-    //Lys for hele secenen
-    auto light = HemisphereLight::create(0xffffbb, 0x080820);
     scene->add(light);
+
 
     //Legger til tanksen i scenen
     Tank tank("../assets/Tank3.stl");
     scene->add(tank.mesh);
-    scene->add(ambientLight);
 
 
     //Landskap for at tanksen kan kjøre rundt
@@ -44,11 +42,14 @@ int main() {
     scene->add(groundMesh);
 
 
-    KeyListener listener;
-    canvas.addKeyListener(listener);
+    //Object3D obj;
+    keycontrolls keyControls(*tank.mesh); // Pass the tank's mesh
+    canvas.addKeyListener(keyControls);
 
     Clock clock;
     canvas.animate([&] {
+        double dt = clock.getDelta();
+        keyControls.update(dt); //For å knappen av bevegsel til å oppdatere seg
         renderer.render(*scene, camera);
     });
 
