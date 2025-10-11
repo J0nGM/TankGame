@@ -29,9 +29,9 @@ int main() {
     scene->background = Color::aliceblue;
 
     //Legger til lys
-    auto directionalLight = DirectionalLight::create(0xffffff, 1.0f);
-    directionalLight->position.set(10, 20, 10);
-    scene->add(directionalLight);
+    auto light = HemisphereLight::create(0xffffbb, 0x080820);
+    scene->add(light);
+
 
     landscape land;
     std::shared_ptr<Mesh> groundMesh = land.groundMesh;
