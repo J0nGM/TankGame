@@ -17,8 +17,7 @@ int main() {
     OrbitControls controls{camera, canvas};
 
     //Laster inn STL filen
-    auto ambientLight = AmbientLight::create(0xffffff, 0.5f);
-    STLLoader loader;
+
 
 
     std::cout << std::filesystem::current_path();
@@ -27,6 +26,9 @@ int main() {
     auto scene = Scene::create();
     scene->background = Color::aliceblue;
 
+    //Lys for hele secenen
+    auto light = HemisphereLight::create(0xffffbb, 0x080820);
+    scene->add(light);
 
     //Legger til tanksen i scenen
     Tank tank("../assets/Tank3.stl");
