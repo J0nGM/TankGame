@@ -7,7 +7,7 @@ using namespace threepp;
 #ifndef EXAM_TANK_HPP
 #define EXAM_TANK_HPP
 
-
+/*
 class key_controller: public KeyListener {
 
 public:
@@ -56,6 +56,6 @@ public:
 
 
 };
-
+*/
 
 #endif //EXAM_TANK_HPP

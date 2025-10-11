@@ -2,6 +2,7 @@
 #include <threepp/threepp.hpp>
 
 //#include "cmake-build-debug/_deps/assimp-src/code/AssetLib/Blender/BlenderDNA.h"
+#include "landscape.hpp"
 #include "threepp/loaders/AssimpLoader.hpp"
 
 int main() {
@@ -23,6 +24,9 @@ int main() {
     auto scene = Scene::create();
     scene->background = Color::aliceblue;
 
+    landscape land;
+    std::shared_ptr<Mesh> groundMesh = land.groundMesh;
+    scene->add(groundMesh);
 
     KeyListener listener;
     canvas.addKeyListener(listener);
@@ -35,10 +39,3 @@ int main() {
 
     return 0;
 }
-    //Loop for scenen
-   /* canvas.animate([&] {
-        camera.aspect = canvas.aspect();
-        renderer.clear();
-                renderer.render(*scene, camera);
-            });
-} */
