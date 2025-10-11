@@ -20,4 +20,4 @@ public:
         groundMesh->position.y = 0;
     }
 };
-#endif //TANK_LANDSCAPE_HPP
+#endif //TANK_lANDSCAPE_HPP

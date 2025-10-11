@@ -34,7 +34,7 @@ int main() {
     scene->add(ambientLight);
 
 
-    //Bakke for at tanksen kan kjøre rundt
+    //Landskap for at tanksen kan kjøre rundt
     landscape land;
     auto groundMesh = land.groundMesh;
     groundMesh->position.y = -0.5f;
