@@ -8,7 +8,7 @@
 #include "threepp/loaders/AssimpLoader.hpp"
 #include "threepp/loaders/OBJLoader.hpp"
 #include "threepp/helpers/CameraHelper.hpp"
-
+#include "WindowResize.hpp"
 
 int main() {
     using namespace threepp;
@@ -16,16 +16,12 @@ int main() {
     GLRenderer renderer(canvas.size());
 
     PerspectiveCamera camera(45, canvas.aspect(), 0.1, 10000);
-    camera.position.set(0, 6, -10);
+    camera.position.set(0, 6, -30);
     OrbitControls controls{camera, canvas};
 
     //Gjør slik at man kan ha stort vindu
-    canvas.onWindowResize([&](WindowSize size) {
-        camera.aspect = size.aspect();
-    camera.updateProjectionMatrix();
-    renderer.setSize(size);
-});
-
+    WindowResizeHandler resizeHandler(camera, renderer);
+    canvas.onWindowResize(resizeHandler);
 
     //Legger til lys
     auto light = HemisphereLight::create(0xffffbb, 0x080820);
@@ -63,6 +59,7 @@ int main() {
     canvas.animate([&] {
         double dt = clock.getDelta();
         keyControls.update(dt); //For å knappen av bevegsel til å oppdatere seg
+
         renderer.render(*scene, camera);
     });
 

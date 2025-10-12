@@ -32,7 +32,8 @@ FetchContent_MakeAvailable(assimp)
 add_subdirectory(src)
 add_executable(TankSim main.cpp
         include/keyControlls.hpp
-        include/Landscape.hpp)
+        include/Landscape.hpp
+        include/WindowResize.hpp)
 
 target_link_libraries(TankSim PUBLIC TankLib)
 
