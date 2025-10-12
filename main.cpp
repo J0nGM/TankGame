@@ -7,6 +7,8 @@
 #include "landscape.hpp"
 #include "threepp/loaders/AssimpLoader.hpp"
 #include "threepp/loaders/OBJLoader.hpp"
+#include "threepp/helpers/CameraHelper.hpp"
+
 
 int main() {
     using namespace threepp;
@@ -16,6 +18,7 @@ int main() {
     PerspectiveCamera camera(45, canvas.aspect(), 0.1, 10000);
     camera.position.set(0, 6, -10);
     OrbitControls controls{camera, canvas};
+
 
 
     //Legger til lys
@@ -33,6 +36,9 @@ int main() {
     Tank tank("../assets/Tank3.stl");
     scene->add(tank.mesh);
 
+    /*auto &tankCamera = tank.camera();
+    auto cameraHelper = CameraHelper::create(tankCamera);
+    scene->add(cameraHelper);*/
 
     //Landskap for at tanksen kan kjøre rundt
     landscape land;
@@ -45,6 +51,7 @@ int main() {
     //Object3D obj;
     keycontrolls keyControls(*tank.mesh); // Pass the tank's mesh
     canvas.addKeyListener(keyControls);
+    std::cout << "Press 'r' to reset tank position. Use WASD keys to steer tank" << std::endl;
 
     Clock clock;
     canvas.animate([&] {

@@ -15,19 +15,30 @@ using namespace threepp;
 
 
 class keycontrolls: public KeyListener {
+private: Object3D* obj_;
+    Vector3 initialPosition_;
+    Quaternion initialRotation_;
 
 public:keycontrolls(Object3D& obj)
-        : obj_(&obj) {}
+        : obj_(&obj),
+        initialPosition_(obj.position),
+        initialRotation_(obj.quaternion)  {}
+
+
     void onKeyPressed(KeyEvent evt) override {
-        if (evt.key == Key::W) {
-            keyState_.up = true;
-        } else if (evt.key == Key::S) {
-            keyState_.down = true;
-        } else if (evt.key == Key::D) {
-            keyState_.right = true;
-        } else if (evt.key == Key::A) {
-            keyState_.left = true;
-        }
+    if (evt.key == Key::W) {
+        keyState_.up = true;
+    } else if (evt.key == Key::S) {
+        keyState_.down = true;
+    } else if (evt.key == Key::D) {
+        keyState_.right = true;
+    } else if (evt.key == Key::A) {
+        keyState_.left = true;
+    }else if (evt.key == Key::R) { //Legger til en reset kanpp for tanksen
+        obj_->position.copy(initialPosition_);
+        obj_->quaternion.copy(initialRotation_);
+    }
+
     }
 
     void onKeyReleased(KeyEvent evt) override {
@@ -66,7 +77,6 @@ private:
         bool right = false;
     } keyState_;
 
-    Object3D* obj_;
     float speed_ = 10.0f; //Farten på W/S
     float angularSpeed_ = 2.0f; //Farten på A/D
 };
