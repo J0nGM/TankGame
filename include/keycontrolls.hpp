@@ -24,6 +24,17 @@ public:keycontrolls(Object3D& obj)
         initialPosition_(obj.position),
         initialRotation_(obj.quaternion)  {}
 
+    //Gir indikasjon på hvilken knapp som er trykket inn
+    struct KeyState {
+    bool up = false;
+    bool down = false;
+    bool left = false;
+    bool right = false;
+} keyState_;
+
+    float speed_ = 20.0f; //Farten på W/S
+    float angularSpeed_ = 2.5f; //Farten på A/D
+
 
     void onKeyPressed(KeyEvent evt) override {
     if (evt.key == Key::W) {
@@ -68,21 +79,8 @@ public:keycontrolls(Object3D& obj)
             obj_->rotateY(angularSpeed_*dt);
         }
     }
-private:
-    //Gir indikasjon på hvilken knapp som er trykket inn
-    struct KeyState {
-        bool up = false;
-        bool down = false;
-        bool left = false;
-        bool right = false;
-    } keyState_;
 
-    float speed_ = 10.0f; //Farten på W/S
-    float angularSpeed_ = 2.0f; //Farten på A/D
+
 };
-
-
-
-
 #endif //TANK_KEYCONTROLLS_HPP
 
