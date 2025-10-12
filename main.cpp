@@ -19,6 +19,12 @@ int main() {
     camera.position.set(0, 6, -10);
     OrbitControls controls{camera, canvas};
 
+    //Gjør slik at man kan ha stort vindu
+    canvas.onWindowResize([&](WindowSize size) {
+        camera.aspect = size.aspect();
+    camera.updateProjectionMatrix();
+    renderer.setSize(size);
+});
 
 
     //Legger til lys
