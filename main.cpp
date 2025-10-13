@@ -35,7 +35,6 @@ int main() {
     scene->add(light);
 
 
-
     //Legger til tanksen i scenen
     Tank tank("../assets/Tank3.stl");
     scene->add(tank.mesh);
@@ -44,7 +43,7 @@ int main() {
     scene->add(tank);
 
     //Denne fungere ikke helt enda
-    camera.lookAt(tank.position);   //Prøver å få kameraet til å se på tanksen
+    camera.lookAt(tank.position); //Prøver å få kameraet til å se på tanksen
     tank.add(camera); //Prøver å gjøre slik at kameraet følger tanksen
 
 
@@ -57,14 +56,14 @@ int main() {
 
 
     //Object3D obj;
-    keycontrolls keyControls(*tank.mesh); // Pass the tank's mesh
+    keycontrolls keyControls(*tank.mesh);
     canvas.addKeyListener(keyControls);
     std::cout << "Press 'r' to reset tank position. Use WASD keys to steer tank" << std::endl;
 
     Clock clock;
     canvas.animate([&] {
         double dt = clock.getDelta();
-        keyControls.update(dt); //For å knappen av bevegsel til å oppdatere seg
+        keyControls.update(dt); //For å få knappen av bevegsel til å oppdatere seg
 
         renderer.render(*scene, camera);
     });
