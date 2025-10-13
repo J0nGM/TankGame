@@ -4,6 +4,8 @@ project(Tank LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#target_compile_definitions(${arg_NAME} PRIVATE DATA_FOLDER="${PROJECT_SOURCE_DIR}/data")
+
 include(FetchContent)
 
 set(THREEPP_BUILD_TESTS OFF)
@@ -27,6 +29,7 @@ FetchContent_Declare(
         GIT_TAG v6.0.2
 )
 FetchContent_MakeAvailable(assimp)
+
 
 
 add_subdirectory(src)

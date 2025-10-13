@@ -11,21 +11,31 @@ int main() {
     GLRenderer renderer(canvas.size());
 
     AssimpLoader loader;
-   // auto geometry = loader.load("Tank.glb");
-
-
+    auto geometry = loader.load("../assets/Tank3.glb");
+    geometry->traverseType<Mesh>([](Mesh& m) {
+        m.receiveShadow = true;
+        m.castShadow = true;
+    });
+    geometry->scale *= 1000;
     //Kameret
     PerspectiveCamera camera(45, canvas.aspect(), 0.1, 10000);
     camera.position.set(0, 6, -10);
     OrbitControls controls{camera, canvas};
 
 
+
+
     auto scene = Scene::create();
     scene->background = Color::aliceblue;
+
 
     //Legger til lys
     auto light = HemisphereLight::create(0xffffbb, 0x080820);
     scene->add(light);
+
+    // After loading geometry
+    scene->add(geometry);
+    geometry->position = {0, 10, 0};
 
 
     landscape land;
