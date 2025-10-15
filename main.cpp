@@ -50,7 +50,9 @@ int main() {
     groundMesh->position.y = -0.5f;
     groundMesh->receiveShadow = true;
     scene->add(groundMesh);
-    scene->add(land.roadMesh);
+    for (const auto& road : land.roads) {
+        scene->add(road);
+    }
 
 
     //Object3D obj;
