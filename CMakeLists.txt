@@ -17,8 +17,19 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(threepp)
 
-include(FetchContent)
+set(CATCH2_BUILD_TESTING OFF)
+FetchContent_Declare(
+        catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v3.11.0
+)
+FetchContent_MakeAvailable(catch2)
 
+enable_testing()
+add_subdirectory(tests)
+
+
+include(FetchContent)
 set(ASSIMP_BUILD_TESTS OFF)
 set(ASSIMP_INSTALL OFF)
 FetchContent_Declare(
@@ -33,7 +44,9 @@ add_subdirectory(src)
 add_executable(TankSim main.cpp
         include/keyControlls.hpp
         include/Landscape.hpp
-        include/WindowResize.hpp)
+        include/WindowResize.hpp
+        tests/test_tank.cpp
+        include/camercontrolls.hpp)
 
 
 target_link_libraries(TankSim PUBLIC TankLib)

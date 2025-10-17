@@ -14,6 +14,8 @@ public:
         auto material = threepp::MeshStandardMaterial::create({{"color", threepp::Color::red}});
         mesh = threepp::Mesh::create(geometry, material);
         mesh->scale *= 0.001f;
+
+        add(mesh);
     }
 };
 

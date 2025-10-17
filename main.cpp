@@ -5,6 +5,7 @@
 #include "keycontrolls.hpp"
 #include "landscape.hpp"
 #include "WindowResize.hpp"
+#include "camercontrolls.hpp"
 
 int main() {
     using namespace threepp;
@@ -13,7 +14,7 @@ int main() {
 
     PerspectiveCamera camera(45, canvas.aspect(), 0.1, 10000);
     camera.position.set(5, 6, -30);
-    OrbitControls controls{camera, canvas};
+   // OrbitControls controls{camera, canvas};
 
     //Gjør slik at man kan ha stort vindu
     WindowResizeHandler resizeHandler(camera, renderer);
@@ -34,15 +35,9 @@ int main() {
 
     //Legger til tanksen i scenen
     Tank tank("../assets/Tank3.stl");
-    scene->add(tank.mesh);
-
     tank.position.y = 0.25;
     scene->add(tank);
-
-    //Denne fungere ikke helt enda
-    camera.lookAt(tank.position);   //Prøver å få kameraet til å se på tanksen
-    tank.add(camera); //Prøver å gjøre slik at kameraet følger tanksen
-
+    CameraFollow cameraFollow(camera, tank, Vector3(60, 20, 0));
 
     //Landskap for at tanksen kan kjøre rundt
     landscape land;
@@ -56,7 +51,7 @@ int main() {
 
 
     //Object3D obj;
-    keycontrolls keyControls(*tank.mesh); // Pass the tank's mesh
+    keycontrolls keyControls(tank); // Pass the tank's mesh
     canvas.addKeyListener(keyControls);
     std::cout << "Press 'r' to reset tank position. Use WASD keys to steer tank" << std::endl;
 
@@ -64,6 +59,7 @@ int main() {
     canvas.animate([&] {
         double dt = clock.getDelta();
         keyControls.update(dt); //For å knappen av bevegsel til å oppdatere seg
+        cameraFollow.update();
 
         renderer.render(*scene, camera);
     });
