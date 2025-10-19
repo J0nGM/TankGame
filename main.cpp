@@ -11,7 +11,7 @@ int main() {
     GLRenderer renderer(canvas.size());
 
     AssimpLoader loader;
-    auto geometry = loader.load("../assets/Tank3.glb");
+    auto geometry = loader.load("../assets/Tank4.glb");
     geometry->traverseType<Mesh>([](Mesh& m) {
         m.receiveShadow = true;
         m.castShadow = true;
