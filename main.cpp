@@ -31,7 +31,7 @@ int main() {
 
 
 
-    Tank tank("../assets/3Dmodell/viecal/Tanktest.glb");
+    Tank tank("../assets/3Dmodell/viecal/Tank.glb");
 
     tank.position.y = 5.0f;
     scene->add(tank);
@@ -55,6 +55,16 @@ int main() {
     scene->add(ground_mesh);
     for (const auto &road: land.roads) {
         scene->add(road);
+    }
+
+    for (int x = -200; x <= 200; x+=200) {
+        for (int z = -200; z <= 200; z += 200) {
+            land.add_tree(Vector3(x, 0, z));
+        }
+    }
+
+    for (const auto &tree : land.objects) {
+        scene->add(tree);
     }
 
 

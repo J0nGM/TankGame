@@ -16,7 +16,7 @@ class Key_controlls : public KeyListener {
 private:
     Object3D *obj_;
     Vector3 initial_position_;
-    Quaternion initial_rotation_;
+    Quaternion initial_rotation_;//Fiks dette
 
     //Gir indikasjon på hvilken knapp som er trykket inn
     struct key_state {

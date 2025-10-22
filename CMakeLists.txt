@@ -48,3 +48,5 @@ add_executable(TankSim main.cpp)
 target_link_libraries(TankSim PUBLIC TankLib)
 
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+#Legg til tanrget_compile_definitions(TankSim PRIVATE THREEPP_USE_ASSIMP)

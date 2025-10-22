@@ -4,6 +4,9 @@
 #include "threepp/threepp.hpp"
 using namespace threepp;
 
+float scale_tank {15.0f}; //endre på størreslen til tanksen her
+float degrees {180.0f};
+
 Tank::Tank(const std::string &path) {
     threepp::AssimpLoader loader;
     auto loadedGroup = loader.load(path);
@@ -12,8 +15,9 @@ Tank::Tank(const std::string &path) {
         m.receiveShadow = true;
         m.castShadow = true;
     });
-    loadedGroup->scale.set(0.00001f, 0.00001f, 0.00001f);
-    //loadedGroup->rotateY(threepp::math::PI); //Rotere tanksen 180 grader, for at W/S går riktig vei
+    loadedGroup->scale.set(scale_tank, scale_tank, scale_tank);
+    loadedGroup->rotateY(threepp::math::degToRad(degrees)); //Rotere tanksen 180 grader, for at W/S går riktig vei
+
 
     add(loadedGroup);
 }
