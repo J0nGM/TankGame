@@ -18,18 +18,18 @@ private:
 
     //Gir indikasjon på hvilken knapp som er trykket inn
     struct key_state {
-        bool up = false;
-        bool down = false;
-        bool left = false;
-        bool right = false;
+        bool up {false};
+        bool down {false};
+        bool left {false};
+        bool right {false};
     } key_state_;
 
-    float speed_ = 0.0f;
-    float max_Speed_ = 40.0f; //Farten på W/S
-    float accleration_ = 10.0f;
-    float deaccleration_ = 30.0f;
+    float speed_ {0.0f};
+    float max_Speed_ {40.0f}; //Farten på W/S
+    float accleration_ {10.0f};
+    float deaccleration_ {30.0f};
 
-    float angel_Speed_ = 2.5f; //Farten på A/D
+    float angel_Speed_ {2.5f}; //Farten på A/D
 
 public:
     Key_controlls(Object3D &obj);

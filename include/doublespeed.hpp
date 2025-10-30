@@ -1,0 +1,33 @@
+#ifndef TANK_POWERUP1_HPP
+#define TANK_POWERUP1_HPP
+#include <iostream>
+#include <threepp/threepp.hpp>
+
+
+class power_up_dbs {
+private:
+    std::shared_ptr<threepp::Mesh> mesh_;
+    float time_ {0.0f};
+    float initial_y_;
+    bool collected_ {false};
+
+public:
+    power_up_dbs(threepp::Vector3 position);
+
+    void update(float dt);
+    //Fikk hjelp av Ai for å lage en is_collcted funksjon
+    bool is_collcted() const { return collected_;}
+    void collect() {
+        collected_ = true;
+        mesh_->visible = false;
+    }
+
+    std::shared_ptr<threepp::Mesh> getMesh() {return mesh_;}
+
+    threepp::Vector3 get_Position() const { return mesh_->position; }
+
+};
+
+
+
+#endif //TANK_POWERUP1_HPP
