@@ -44,7 +44,7 @@ int main() {
 
     Key_controlls key_controls(tank);
     canvas.addKeyListener(key_controls);
-    std::cout << "Press 'r' to reset tank position. Use WASD keys to steer tank" << std::endl;
+    std::cout << "Use WASD keys to steer tank, Press 'r' to reset tank position." << std::endl;
 
 
     Camera_follow camera_follow(camera, tank, key_controls, Vector3(60, 20, 0));
@@ -72,7 +72,7 @@ int main() {
     for (const auto &tree: land.objects) {
         scene->add(tree);
     }
-
+    //Plasserer ut powerups randomt på kartet
     int num_powerups{5};
     for (int i = 0; i < num_powerups; i++) {
         float random_x = (rand() % 400) - 200;
@@ -95,6 +95,8 @@ int main() {
         if (collision::check_collision(bb, land.objects)) {
             tank.position = old_position;
         }
+
+        //For å få powerups på kartet
         Vector3 tank_center;
         bb.getCenter(tank_center);
         for (auto& powerup : powerups)
@@ -109,7 +111,7 @@ int main() {
 
                 if (distance < 5.0f) { //Hvis tanksen er nærme nok powerupen
                     powerup->collect();
-                    key_controls.speed_boost_activated();
+                    key_controls.add_boost();
                 }
             }
         camera_follow.update(static_cast<float>(dt));

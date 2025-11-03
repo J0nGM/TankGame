@@ -25,8 +25,11 @@ void Key_controlls::onKeyPressed(KeyEvent evt) {
         key_state_.right = true;
     } else if (evt.key == Key::A) {
         key_state_.left = true;
+    }
+    else if (evt.key == Key::SPACE) {
+        use_boost();
     } else if (evt.key == Key::R) {
-        //Legger til en reset kanpp for tanksen
+        //Legger til en reset knapp for tanksen
         obj_->position.copy(initial_position_);
         obj_->quaternion.copy(initial_rotation_);
         std::cout << "Restarted position" << std::endl;
@@ -84,4 +87,24 @@ void Key_controlls::speed_boost_activated() {
     speed_multiplier_ = 2.0f;
     boost_timer_ = boost_duration_;
     std::cout << "Speed boost is activated!" << std::endl;
+}
+
+void Key_controlls::add_boost() {
+    boost_collected_++;
+    std::cout << "Boost is collected" << boost_collected_ << std::endl;
+}
+void Key_controlls::use_boost() {
+        if (boost_timer_ > 0.0f) {
+            std::cout << "Boost is already active, cannot collect another" << std::endl;
+            return;
+        }
+        if (boost_collected_ <= 0) {
+            std::cout << "No boosts are available" << std::endl;
+            return;
+        }
+
+        boost_collected_--;
+        speed_multiplier_ = 2.0f;
+        boost_timer_ = boost_duration_;
+        std::cout << "Speed boost is activated, remainging boosts: " << boost_collected_ << std::endl;
 }

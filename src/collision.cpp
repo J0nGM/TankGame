@@ -18,7 +18,7 @@ bool collision::check_collision(Box3 tank_box, std::vector<std::shared_ptr<three
         }
 
 
-            //AI hjelpet meg med å shrinke boksen litt, slik at det ikke er så sensitivt for kollisjoner
+            //Shrinke boksen litt, slik at det ikke er så sensitivt for kollisjoner
             float shrink_amount = 7.5f;
             Vector3 min = object_box.min();
             Vector3 max = object_box.max();

@@ -4,7 +4,7 @@
 using namespace threepp;
 
 power_up_dbs::power_up_dbs(Vector3 position) : initial_y_(position.y) {
-    auto geometry = SphereGeometry::create(20, 2, 10);
+    auto geometry = SphereGeometry::create(2, 32, 32);
 
     //Tatt fra threepp clipping eksempel for å lage Meshpongmaterialet
     auto material = MeshPhongMaterial::create({{"color", Color::yellow},

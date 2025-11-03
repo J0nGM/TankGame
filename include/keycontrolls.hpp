@@ -36,6 +36,7 @@ private:
     float boost_timer_ {0.0f};
     float boost_duration_ {5.0f};
 
+    int boost_collected_ {0};
 
 public:
     Key_controlls(Object3D &obj);
@@ -52,5 +53,10 @@ public:
     void update(float dt);
 
     void speed_boost_activated();
+
+    void add_boost();
+    void use_boost();
+    int get_collected_boosts() const { return boost_collected_; }
+    bool has_activated_boost() const { return boost_timer_ > 0.0f;}
 };
 #endif //TANK_KEYCONTROLLS_HPP
