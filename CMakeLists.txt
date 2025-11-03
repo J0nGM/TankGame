@@ -19,6 +19,18 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(threepp)
 
+set(CATCH2_BUILD_TESTING OFF)
+FetchContent_Declare(
+        catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v3.11.0
+)
+FetchContent_MakeAvailable(catch2)
+
+enable_testing()
+add_subdirectory(tests)
+
+
 include(FetchContent)
 
 set(ASSIMP_BUILD_TESTS OFF)
@@ -33,10 +45,11 @@ FetchContent_MakeAvailable(assimp)
 
 
 add_subdirectory(src)
-add_executable(TankSim main.cpp
-        include/keyControlls.hpp)
+add_executable(TankSim main.cpp)
+
 
 target_link_libraries(TankSim PUBLIC TankLib)
 
-
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
+#Legg til tanrget_compile_definitions(TankSim PRIVATE THREEPP_USE_ASSIMP)
