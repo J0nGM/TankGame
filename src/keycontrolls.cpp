@@ -58,8 +58,8 @@ void Key_controlls::update(float dt) {
     if (key_state_.space && boost_time_left_ > 0.0f) {
         boost_time_left_ -= dt;
         if (boost_time_left_ < 0.0f) boost_time_left_ = 0.0f;
-        speed_multiplier_ = 2.0f;
-        std::cout << "Boost is active! Time left: " << boost_time_left_ << " seconds." << std::endl;
+        speed_multiplier_ = 4.0f;
+        std::cout << "Boost is active! Time left: " << static_cast<int>(boost_time_left_) << " seconds." << std::endl;
     }
     else {
         speed_multiplier_ = 1.0f;
