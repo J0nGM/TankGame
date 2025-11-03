@@ -4,7 +4,7 @@
 #include <threepp/threepp.hpp>
 
 
-class power_up_dbs {
+class power_up_boost {
 private:
     std::shared_ptr<threepp::Mesh> mesh_;
     float time_ {0.0f};
@@ -12,7 +12,7 @@ private:
     bool collected_ {false};
 
 public:
-    power_up_dbs(threepp::Vector3 position);
+    power_up_boost(threepp::Vector3 position);
 
     void update(float dt);
     //Fikk hjelp av Ai for å lage en is_collcted funksjon

@@ -22,17 +22,20 @@ private:
         bool down {false};
         bool left {false};
         bool right {false};
+        bool space {false};
     } key_state_;
 
     float speed_ {0.0f};
     float max_Speed_ {40.0f}; //Farten på W/S
     float accleration_ {10.0f};
     float deaccleration_ {30.0f};
-
     float angel_Speed_ {2.5f}; //Farten på A/D
 
+    float boost_time_left_ {0.0f};
+    float boost_time_max_ {5.0f};
+
     //for powerupen
-    float speed_multiplier_ {2.0f};//For å kunne endre farten ved powerups
+    float speed_multiplier_ {1.0f};//For å kunne endre farten ved powerups
     float boost_timer_ {0.0f};
     float boost_duration_ {5.0f};
 

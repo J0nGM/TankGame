@@ -1,9 +1,9 @@
-#include "doublespeed.hpp"
+#include "boost.hpp"
 #include <cmath>
 
 using namespace threepp;
 
-power_up_dbs::power_up_dbs(Vector3 position) : initial_y_(position.y) {
+power_up_boost::power_up_boost(Vector3 position) : initial_y_(position.y) {
     auto geometry = SphereGeometry::create(2, 32, 32);
 
     //Tatt fra threepp clipping eksempel for å lage Meshpongmaterialet
@@ -17,7 +17,7 @@ power_up_dbs::power_up_dbs(Vector3 position) : initial_y_(position.y) {
 
 }
 
-void power_up_dbs::update(float dt){
+void power_up_boost::update(float dt){
     time_ += dt;
     //Slik at powerupen beveger seg opp og ned
      //fikk help av AI for å få den til å bevege seg opp og ned

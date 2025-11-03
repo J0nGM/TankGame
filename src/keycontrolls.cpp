@@ -26,8 +26,10 @@ void Key_controlls::onKeyPressed(KeyEvent evt) {
     } else if (evt.key == Key::A) {
         key_state_.left = true;
     }
+    //Space for å aktivere boosten
     else if (evt.key == Key::SPACE) {
-        use_boost();
+        key_state_.space = true;
+
     } else if (evt.key == Key::R) {
         //Legger til en reset knapp for tanksen
         obj_->position.copy(initial_position_);
@@ -47,17 +49,22 @@ void Key_controlls::onKeyReleased(KeyEvent evt) {
     } else if (evt.key == Key::A) {
         key_state_.left = false;
     }
+    else if (evt.key == Key::SPACE) {
+        key_state_.space = false;
+    }
 }
 
 void Key_controlls::update(float dt) {
-    if (boost_timer_ > 0.0f) {
-        boost_timer_ -= dt;
-
-        if (boost_timer_ <= 0.0f) {
-            speed_multiplier_ = 1.0f;
-            std::cout << "Boost has ended" << std::endl;
-        }
+    if (key_state_.space && boost_time_left_ > 0.0f) {
+        boost_time_left_ -= dt;
+        if (boost_time_left_ < 0.0f) boost_time_left_ = 0.0f;
+        speed_multiplier_ = 2.0f;
+        std::cout << "Boost is active! Time left: " << boost_time_left_ << " seconds." << std::endl;
     }
+    else {
+        speed_multiplier_ = 1.0f;
+    }
+
 
     int move_Direction = 0;
     if (key_state_.up) move_Direction = 1;
@@ -83,28 +90,8 @@ void Key_controlls::update(float dt) {
 
 }
 
-void Key_controlls::speed_boost_activated() {
-    speed_multiplier_ = 2.0f;
-    boost_timer_ = boost_duration_;
-    std::cout << "Speed boost is activated!" << std::endl;
-}
-
 void Key_controlls::add_boost() {
     boost_collected_++;
-    std::cout << "Boost is collected" << boost_collected_ << std::endl;
-}
-void Key_controlls::use_boost() {
-        if (boost_timer_ > 0.0f) {
-            std::cout << "Boost is already active, cannot collect another" << std::endl;
-            return;
-        }
-        if (boost_collected_ <= 0) {
-            std::cout << "No boosts are available" << std::endl;
-            return;
-        }
-
-        boost_collected_--;
-        speed_multiplier_ = 2.0f;
-        boost_timer_ = boost_duration_;
-        std::cout << "Speed boost is activated, remainging boosts: " << boost_collected_ << std::endl;
+    boost_time_left_ += boost_time_max_;
+    std::cout << "Boost is collected and ready to be used" << boost_collected_ << std::endl;
 }
