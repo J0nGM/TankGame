@@ -14,16 +14,17 @@ game_manger::game_manger(
     Key_controlls &key_controls,
     Landscape &land,
     Camera_follow &camera_follow)
-        : scene_(scene),
-          tank_(tank),
-          key_controlls_(key_controls),
-          landscape_(land),
-          camera_follow_(camera_follow) {
+    : scene_(scene),
+      tank_(tank),
+      key_controlls_(key_controls),
+      landscape_(land),
+      camera_follow_(camera_follow) {
 }
+
 //Used randomfuction so much that I created a function for it
 threepp::Vector3 game_manger::random_position(float range_x, float y, float range_z) {
-    float random_x = (rand()% static_cast<int>(range_x)) - (range_x / 2);
-    float random_z = (rand()% static_cast<int>(range_z)) - (range_z / 2);
+    float random_x = (rand() % static_cast<int>(range_x)) - (range_x / 2);
+    float random_z = (rand() % static_cast<int>(range_z)) - (range_z / 2);
     return Vector3(random_x, y, random_z);
 }
 
@@ -52,7 +53,7 @@ void game_manger::handle_ammo_collisions() {
     Vector3 tank_center;
     bb.getCenter(tank_center);
 
-    for (auto& ammo_pickup: ammo_) {
+    for (auto &ammo_pickup: ammo_) {
         if (!ammo_pickup->is_collected()) {
             Vector3 ammo_pos = ammo_pickup->get_Position();
             float distance = calcualte_distance(tank_center, ammo_pos);
@@ -95,7 +96,7 @@ void game_manger::handle_shooting() {
 }
 
 void game_manger::update_bullets(float dt) {
-    for (auto& bullet : bullets_) {
+    for (auto &bullet: bullets_) {
         if (bullet->is_active()) {
             bullet->update(dt);
         }
@@ -105,13 +106,13 @@ void game_manger::update_bullets(float dt) {
 void game_manger::cleanup_bullets() {
     bullets_.erase(
         std::remove_if(bullets_.begin(), bullets_.end(),
-            [&](auto& bullet) {
-                if (!bullet->is_active()) {
-                    scene_.remove(*bullet->get_mesh());
-                    return true;
-                }
-                return false;
-            }
+                       [&](auto &bullet) {
+                           if (!bullet->is_active()) {
+                               scene_.remove(*bullet->get_mesh());
+                               return true;
+                           }
+                           return false;
+                       }
         ),
         bullets_.end()
     );
@@ -139,22 +140,21 @@ void game_manger::handle_powerup_collisions() {
         }
     }
 }
+
 //Got assistens from AI to create this function
 void game_manger::bullet_collisions_with_tree() {
-    for (auto& bullet: bullets_) {
+    for (auto &bullet: bullets_) {
         if (!bullet->is_active()) continue;
 
         Vector3 bullet_pos = bullet->get_position();
 
-        for (auto& tree: landscape_.objects) {
+        for (auto &tree: landscape_.objects) {
+            if (!bullet->is_active()) continue;
             Vector3 tree_pos = tree->position;
-
-            float dx = bullet_pos.x - tree_pos.x;
-            float dz = bullet_pos.z - tree_pos.z;
-            float distance = std::sqrt(dx * dx + dz * dz);
+            float distance = calcualte_distance(bullet_pos, tree_pos);
 
             if (distance < 5.0f) {
-                tree->visible=false;
+                tree->visible = false;
                 bullet->deactivate();
                 std::cout << "Tree damaged" << std::endl;
                 break;
@@ -164,8 +164,9 @@ void game_manger::bullet_collisions_with_tree() {
 }
 
 bool game_manger::all_trees_destroyed() const {
-    for (const auto& tree : landscape_.objects) {
-        if (tree->visible) {    //If any trees are still visible
+    for (const auto &tree: landscape_.objects) {
+        if (tree->visible) {
+            //If any trees are still visible
             return false;
         }
     }
@@ -174,9 +175,11 @@ bool game_manger::all_trees_destroyed() const {
 
 void game_manger::check_portal_spawn() {
     if (!portal_ && all_trees_destroyed()) {
-        Vector3 portal_position(0, 5,0);
+        Vector3 portal_position(0, 5, 0);
         portal_ = std::make_unique<portal_lvl2>(portal_position);
         scene_.add(portal_->get_mesh());
+        portal_->activate();
+
         std::cout << "Portal spawned!" << std::endl;
     }
 }
@@ -192,33 +195,39 @@ void game_manger::portal_entry() {
     Vector3 portal_pos = portal_->get_position();
     float distance_ = calcualte_distance(tank_center, portal_pos);
 
-    if (distance_ < 5.0f && portal_->is_activated()) {
+    if (distance_ < 10.0f && portal_->is_activated()) {
         load_level_2();
     }
 }
 
 void game_manger::clean_level() {
-    for (auto& bullet: bullets_) {
+    for (auto &bullet: bullets_) {
         scene_.remove(*bullet->get_mesh());
     }
     bullets_.clear();
 
-    for (auto& tree : landscape_.objects) {
+    for (auto &tree: landscape_.objects) {
         scene_.remove(*tree);
     }
     landscape_.objects.clear();
 
-    for (auto& powerup: powerups_) {
+    for (auto &powerup: powerups_) {
         scene_.remove(*powerup->getMesh());
     }
     powerups_.clear();
 
-    for (auto& ammo: ammo_) {
+    for (auto &ammo: ammo_) {
         scene_.remove(*ammo->getMesh());
     }
     ammo_.clear();
-}
 
+    scene_.remove(*landscape_.groundMesh);
+
+    for (auto& road : landscape_.roads) {
+        scene_.remove(*road);
+    }
+
+}
 
 void game_manger::load_level_2() {
     level_completed_ = true;
@@ -226,10 +235,21 @@ void game_manger::load_level_2() {
     clean_level();
 
     tank_.position.set(0, 5, 0);
-    tank_.rotation.set(0,0,0);
+    tank_.rotation.set(0, 0, 0);
 
     setup_powerups(5);
     setup_ammo(5);
+
+    auto ground_geometry = PlaneGeometry::create(750, 750);
+    auto ground_material = MeshPhongMaterial::create();
+    ground_material->color = Color(1.0f, 0.8f, 0.6f);
+
+    level2_ground_ = Mesh::create(ground_geometry, ground_material);
+    level2_ground_->rotation.x = -math::PI / 2;
+    level2_ground_->position.y = -0.5f;
+    level2_ground_->receiveShadow = true;
+    scene_.add(level2_ground_);
+
 }
 
 
@@ -241,13 +261,13 @@ void game_manger::update(float dt) {
     handle_powerup_collisions();
     handle_ammo_collisions();
     bullet_collisions_with_tree();
-    camera_follow_.update(dt);
     check_portal_spawn();
     portal_entry();
 
     if (portal_) {
         portal_->update(dt);
     }
+    camera_follow_.update(dt);
 
     for (auto &powerup: powerups_) {
         if (!powerup->is_collcted()) {
@@ -260,4 +280,3 @@ void game_manger::update(float dt) {
         }
     }
 }
-

@@ -13,6 +13,8 @@
 #include "bullet.hpp"
 #include "ammo.hpp"
 #include "portalLVL2.hpp"
+#include "landscape2.hpp"
+
 class game_manger {
 private:
     threepp::Scene& scene_;
@@ -28,6 +30,9 @@ private:
     std::unique_ptr<portal_lvl2> portal_;
     int current_level_ {1};
     bool level_completed_ {false};
+
+    std::shared_ptr<threepp::Mesh> level2_ground_;
+    std::vector<std::shared_ptr<threepp::Object3D>> level2_objects_;
 
 
 public:

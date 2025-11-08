@@ -55,7 +55,7 @@ int main() {
     }
 
     //Lagern en for løkke som generere trær helt randomt på landskapet
-    int num_trees{20};
+    int num_trees{1};
     //Hjelp fra AI for å generere random trær
     for (int i = 0; i < num_trees; i++) {
         float random_x = (rand() % 500) - 250;
@@ -68,7 +68,7 @@ int main() {
     }
 
     game_manger game(*scene, tank, key_controls, land, camera_follow);
-    game.setup_powerups(8); //Ammount of boots can pickup in the game
+    game.setup_powerups(8); //Ammount of boosts I can pickup in the game
     game.setup_ammo(8); //Ammount ammo you get for when picked up
 
     Clock clock;
