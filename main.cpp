@@ -55,7 +55,7 @@ int main() {
     }
 
     //Lagern en for løkke som generere trær helt randomt på landskapet
-    int num_trees{5};
+    int num_trees{1};
     //Hjelp fra AI for å generere random trær
     for (int i = 0; i < num_trees; i++) {
         const float random_x = (rand() % 500) - 250;
