@@ -1,0 +1,60 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: "Windows"
+            os: windows-latest
+            
+          - name: "Linux"
+            os: ubuntu-22.04
+            install_deps: |
+              sudo apt-get update
+              sudo apt-get install -y \
+                libxinerama-dev \
+                libxcursor-dev \
+                xorg-dev \
+                libglu1-mesa-dev \
+                pkg-config \
+                libglfw3-dev
+            cmake_flags: "-DTHREEPP_USE_EXTERNAL_GLFW=ON"
+            
+          - name: "macOS"
+            os: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install dependencies
+        if: matrix.config.install_deps
+        run: ${{ matrix.config.install_deps }}
+
+      - name: Configure CMake
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Release \
+            ${{ matrix.config.cmake_flags }}
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Test
+        working-directory: build
+        run: ctest -C Release --output-on-failure
+        continue-on-error: true
