@@ -1,4 +1,5 @@
 #include "bullet.hpp"
+#include <cmath>
 
 using namespace threepp;
 
