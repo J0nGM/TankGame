@@ -31,7 +31,7 @@ private:
     std::vector<std::unique_ptr<bullet>> enemy_bullets_;
     std::vector<std::unique_ptr<Enemy>> enemies_;
 
-    int player_hp_ {3};
+    int player_hp_ {8};
     bool game_over_ {false};
 
     std::unique_ptr<portal_lvl2> portal_;
@@ -77,6 +77,7 @@ private:
     void handle_powerup_collisions();
     void handle_ammo_collisions();
     void bullet_collisions_with_tree();
+    void check_enemy_collisions();
 
     void check_portal_spawn();
     void portal_entry();

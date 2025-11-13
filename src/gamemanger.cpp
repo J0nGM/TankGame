@@ -199,7 +199,7 @@ void game_manger::portal_entry() {
         load_level_2();
     }
 }
-//Got some help from AI for the clean level function
+//Got help from AI for the clean level function
 void game_manger::clean_level() {
     for (auto &bullet: bullets_) {
         scene_.remove(*bullet->get_mesh());
@@ -260,7 +260,7 @@ void game_manger::setup_enemies(int count) {
         const float random_x = (rand() % 400) - 200;
         const float random_z = (rand() % 400) - 200;
 
-        auto enemy_ptr = std::make_unique<Enemy>(Vector3(random_x, 2.5f, random_z));
+        auto enemy_ptr = std::make_unique<Enemy>(Vector3(random_x, 12.5f, random_z));
         scene_.add(enemy_ptr->get_mesh());
         enemies_.push_back(std::move(enemy_ptr));
     }
@@ -305,7 +305,7 @@ void game_manger::enemy_shooting() {
             direction.normalize();
 
             Vector3 spawn_position = enemy_pos;
-            spawn_position.y += 3.0f;
+            spawn_position.y += 6.0f;
             auto enemy_bullet_ptr = std::make_unique<bullet>(spawn_position, direction, 150.0f);
             scene_.add(enemy_bullet_ptr->get_mesh());
             enemy_bullets_.push_back(std::move(enemy_bullet_ptr));
@@ -354,7 +354,8 @@ void game_manger::check_enemy_hit() {
             Vector3 enemy_pos = enemy->get_position();
             float distance = calculate_distance(bullet_pos, enemy_pos);
 
-            if (distance < 5.0f) {
+            std::cout << "  Distance to enemy: " << distance << std::endl;
+            if (distance < 15.0f) {
                 enemy->take_damage();
                 bullet->deactivate();
                 break;
@@ -364,7 +365,27 @@ void game_manger::check_enemy_hit() {
 
 }
 
+void game_manger::check_enemy_collisions() {
+    Box3 bb;
+    bb.setFromObject(tank_);
+    Vector3 tank_center;
+    bb.getCenter(tank_center);
 
+    for (auto& enemy : enemies_) {
+        if (enemy->is_damaged()) continue;
+        Vector3 enemy_pos = enemy->get_position();
+        float distance = calculate_distance(tank_center, enemy_pos);
+
+        if (distance<8.0f) {
+            Vector3 push_direction = tank_center;
+            push_direction.sub(enemy_pos);
+            push_direction.y = 0;
+            push_direction.normalize();
+
+            tank_.position.addScaledVector(push_direction, 0.5f);
+        }
+    }
+}
 
 void game_manger::update(float dt) {
     if (game_over_) {
@@ -387,6 +408,7 @@ void game_manger::update(float dt) {
         update_enemy_bullets(dt);
         check_player_hit();
         check_enemy_hit();
+        check_enemy_collisions();
 
     }
 

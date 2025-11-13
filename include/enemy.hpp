@@ -8,7 +8,7 @@ private:
     threepp::Vector3 position_;
     float shoot_timer_{0};
     const float shoot_intreval_{2.0f};
-    int hp_{3};
+    int hp_{1};
     bool is_destryd{false};
 
 public:

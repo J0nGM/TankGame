@@ -25,9 +25,9 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(catch2)
 
+
 enable_testing()
 add_subdirectory(tests)
-
 
 include(FetchContent)
 
@@ -46,7 +46,39 @@ add_subdirectory(src)
 add_executable(TankSim main.cpp)
 
 
-target_link_libraries(TankSim PUBLIC TankLib)
+#used https://gist.github.com/jeffamstutz/992723dfabac4e3ffff265eb71a24cd9 for imgui
+include(FetchContent)
+
+
+FetchContent_Declare(
+        imgui
+        URL https://github.com/ocornut/imgui/archive/docking.zip
+        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
+FetchContent_MakeAvailable(imgui)
+
+
+find_package(OpenGL REQUIRED)
+
+
+add_library(imgui_glfw STATIC
+        ${imgui_SOURCE_DIR}/imgui.cpp
+        ${imgui_SOURCE_DIR}/imgui_draw.cpp
+        ${imgui_SOURCE_DIR}/imgui_demo.cpp
+        ${imgui_SOURCE_DIR}/imgui_tables.cpp
+        ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_glfw.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+)
+
+target_link_libraries(imgui_glfw PUBLIC threepp::threepp OpenGL::GL)
+
+target_include_directories(imgui_glfw PUBLIC
+        ${imgui_SOURCE_DIR}
+        ${imgui_SOURCE_DIR}/backends
+)
+
+target_link_libraries(TankSim PUBLIC TankLib imgui_glfw)
 
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 

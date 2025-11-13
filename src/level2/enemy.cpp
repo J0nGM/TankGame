@@ -3,7 +3,7 @@
 using namespace threepp;
 
 Enemy::Enemy(threepp::Vector3 position) : position_(position) {
-    auto body_geometry = CylinderGeometry::create(3,3,15);
+    auto body_geometry = CylinderGeometry::create(8,8,25);
     auto body_material = MeshStandardMaterial::create();
     body_material->color = Color::red;
     body_material->emissive = Color::darkred;
