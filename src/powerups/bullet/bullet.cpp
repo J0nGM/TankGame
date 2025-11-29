@@ -3,7 +3,7 @@
 
 using namespace threepp;
 
-bullet::bullet(Vector3 posotion, Vector3 direction, float speed) {
+bullet::bullet(Vector3 position, Vector3 direction, float speed) {
 
     auto geomerty = SphereGeometry::create(0.5f, 8, 8);
     auto material = MeshPhongMaterial::create();
@@ -12,7 +12,7 @@ bullet::bullet(Vector3 posotion, Vector3 direction, float speed) {
     material->emissiveIntensity = 0.8f;
 
     mesh_ = Mesh::create(geomerty, material);
-    mesh_->position.copy(posotion);
+    mesh_->position.copy(position);
     mesh_->castShadow = true;
 
     velocity_ = direction;
@@ -24,7 +24,7 @@ void bullet::update(float dt) {
     if (!active_) return;
 
     //Fikk hjelp av Ai for denn delen
-    mesh_->position.addScaledVector(velocity_, dt);
+    mesh_->position.addScaledVector(velocity_, dt); //Oppdaterer posisjonen basert på hastigheten og tidsdifferansen
 
     life_time_ += dt;
     if (life_time_ > max_life_time_) {

@@ -5,7 +5,7 @@
 
 
 class Landscape {
-private:
+protected:
     //To cahnge the size of the trees
     const float height_tree_ {10.0f};
     const float tree_log_radius_ {2.0f};
@@ -22,6 +22,8 @@ public:
     std::vector<std::shared_ptr<threepp::Mesh>> roads;
 
     Landscape();
+    Landscape(float ground_size);
+    virtual ~Landscape() = default; //for arv
     void add_tree(threepp::Vector3 position);
 };
 #endif //TANK_lANDSCAPE_HPP

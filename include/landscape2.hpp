@@ -3,14 +3,10 @@
 
 #include <iostream>
 #include <threepp/threepp.hpp>
-class landscape2 {
+#include "landscape.hpp"
+class Landscape2 : public Landscape  {
 public:
-    std::shared_ptr<threepp::Mesh> groundMesh;
-    std::vector<std::shared_ptr<threepp::Object3D>> objects;
-    std::vector<std::shared_ptr<threepp::Mesh>> roads;
-
-    landscape2();
-    void add_obstacle(threepp::Vector3 position);
+    Landscape2();
 };
 
 #endif //TANK_LANDSCAPE2_HPP
