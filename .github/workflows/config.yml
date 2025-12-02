@@ -1,48 +1,76 @@
 #Took this from the threepp repo:
 name: Build
-
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+on: [push, workflow_dispatch]
 
 jobs:
-  build:
-    name: ${{ matrix.os }}
+  linux:
     runs-on: ${{ matrix.os }}
-
+    env:
+      CC: gcc-${{ matrix.compiler_version }}
+      CXX: g++-${{ matrix.compiler_version }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, windows-latest, macos-latest]
-
+        os: [ ubuntu-22.04 ]
+        compiler_version: [ 11 ]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Install Linux dependencies
-        if: runner.os == 'Linux'
+      - uses: actions/checkout@v4
+      
+      - name: Install prerequisites
         run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libxinerama-dev \
-            libxcursor-dev \
-            xorg-dev \
-            libglu1-mesa-dev \
-            pkg-config \
-            libglfw3-dev
-
-      - name: Configure CMake
-        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
-
-      - name: Build
-        run: cmake --build build --config Release --parallel 2
-
+          sudo apt-get update && sudo apt-get install -y \
+          libxinerama-dev \
+          libxcursor-dev \
+          xorg-dev \
+          libglu1-mesa-dev \
+          pkg-config \
+          libglfw3 \
+          libglfw3-dev
+      
+      - name: Configure and build
+        run: |
+          cmake . -B build -DCMAKE_BUILD_TYPE="Release"
+          cmake --build build
+      
       - name: Test
-        working-directory: build
-        run: ctest -C Release --output-on-failure
-        continue-on-error: true
+        run: |
+          cd build/tests
+          ctest --output-on-failure
+
+  windows:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure and build
+        run: |
+          cmake . -A x64 -B build -DCMAKE_BUILD_TYPE="Release"
+          cmake --build build --config Release
+      
+      - name: Test
+        run: |
+          cd build/tests
+          ctest -C Release --output-on-failure
+
+  darwin:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-13]
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Configure and build
+        run: |
+          cmake . -B build -DCMAKE_BUILD_TYPE="Release"
+          cmake --build build
+      
+      - name: Test
+        run: |
+          cd build/tests
+          ctest --output-on-failure
