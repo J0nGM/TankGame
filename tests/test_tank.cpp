@@ -6,7 +6,7 @@
 #include "ammo.hpp"
 #include "levelmanger.hpp"
 #include "enemymanager.hpp"
-#include "collisionmanger.hpp"
+#include "collisionmanager.hpp"
 #include "threepp/threepp.hpp"
 #include <catch2/catch_test_macros.hpp>
 

@@ -16,7 +16,7 @@ tank::tank(const std::string &path) {
         m.castShadow = true;
     });
     loadedGroup->scale.set(scale_tank, scale_tank, scale_tank);
-    loadedGroup->rotateY(threepp::math::degToRad(degrees)); //Rotere tanksen 180 grader, for at W/S går riktig vei
+    loadedGroup->rotateY(threepp::math::degToRad(degrees)); //Rotated the tank 180 degrees, so that W/S where correct way
 
 
     add(loadedGroup);

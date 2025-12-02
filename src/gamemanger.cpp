@@ -1,5 +1,5 @@
 #include "gamemanger.hpp"
-#include "collisionmanger.hpp"
+#include "collisionmanager.hpp"
 #include "imguihandler.hpp"
 #include <cstdlib>
 #include <iostream>
