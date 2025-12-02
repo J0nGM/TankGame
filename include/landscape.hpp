@@ -12,7 +12,7 @@ protected:
     const float tree_log_height_ {15.0f};
     const float cone_width_ {1.5f};
     const float cone_height_ {3.0f};
-    const int amount_trees_spawned_{1}; //Number of trees to spawn
+    const int amount_trees_spawned_{1};
 
     const int ground_width_{500};
     const int ground_heigth_{500};

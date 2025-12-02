@@ -30,7 +30,7 @@ private:
     //For the boost functionality
     int boost_collected_{0};
     float boost_time_left_{0.0f};
-    const float boost_duration_{2.5f};//How long the boost lasts
+    const float boost_duration_{2.5f};
     const float boost_multiplier_{4.0f};//How much speed is increased when boost is active
 };
 

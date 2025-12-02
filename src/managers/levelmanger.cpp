@@ -51,7 +51,7 @@ void level_manger::setup_level_1() {
     }
 
     //Level 1
-    arena_.add_walls_to_scene(scene_, level1_arena_size);//arnea size. Located in the hpp
+    arena_.add_walls_to_scene(scene_, level1_arena_walls_size_);//arnea size. Located in the hpp
 
     pickups_.clear(scene_);
 
@@ -72,7 +72,7 @@ void level_manger::setup_level_2() {
         scene_.add(road);
     }
 
-    arena_.add_walls_to_scene(scene_, level2_arena_size);
+    arena_.add_walls_to_scene(scene_, level2_arena_walls_size_);
 
     obstacles_.spawn_barriers_randomly(scene_, random_pos_func_);
     obstacles_.add_to_scene(scene_);

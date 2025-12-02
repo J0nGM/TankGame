@@ -5,6 +5,7 @@ using namespace threepp;
 obsticale_lvl2::obsticale_lvl2(const Vector3& position, obsticale_type_lvl_2 type)
 : position_(position), type_(type) {
 
+    //creatinh the barrieres
         auto geometry = BoxGeometry::create(20, 5, 4);
         auto material = MeshPhongMaterial::create(
             {{"color", Color::brown},

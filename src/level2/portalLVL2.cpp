@@ -4,7 +4,7 @@ using namespace threepp;
 
 portal_lvl2::portal_lvl2(Vector3 position) {
     auto geometry = BoxGeometry::create(7, 20, 1);
-    auto material = MeshStandardMaterial::create({  // Fixed: Added namespace
+    auto material = MeshStandardMaterial::create({
         {"color", Color::purple},
         {"emissive", Color::purple},
         {"emissiveIntensity", 0.8f}

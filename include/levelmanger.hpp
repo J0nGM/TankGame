@@ -24,14 +24,14 @@ private:
     static constexpr int level1_powerups = 10;
     static constexpr int level1_ammo = 10;
     static constexpr float level1_spawn_range = 230.0f;
-    static constexpr float level1_arena_size = 240.0f;
+    static constexpr float level1_arena_walls_size_ = 246.0f;
 
     //Level 2 configuration
     static constexpr int level2_powerups = 12;
     static constexpr int level2_ammo = 12;
     static constexpr int level2_enemies = 8;
-    static constexpr float level2_spawn_range = 400.0f;
-    static constexpr float level2_arena_size = 350.0f;
+    static constexpr float level2_spawn_range = 365.0f;
+    static constexpr float level2_arena_walls_size_ = 375.0f; //The walls are further out than the landscape
 
     static constexpr float pickup_height = 3.0f;
 

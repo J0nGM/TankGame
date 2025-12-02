@@ -3,8 +3,6 @@
 
 #include <threepp/threepp.hpp>
 
-
-
 class window_resize_handler {
 public:
     window_resize_handler(threepp::PerspectiveCamera &camera, threepp::GLRenderer &renderer);

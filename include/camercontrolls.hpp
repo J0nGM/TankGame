@@ -12,7 +12,7 @@ private:
     threepp::Vector3 base_offset_;
     const float smooth_speed_ = 0.1f;
     float min_distanse_ = 50.0f;
-    float max_distanse_ = 70.0f;
+    float max_distanse_ = 80.0f;
 
 public:
     Camera_follow(threepp::PerspectiveCamera &camera, threepp::Object3D &target,
