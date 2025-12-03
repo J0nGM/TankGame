@@ -1,5 +1,6 @@
 #include "trailmanager.hpp"
 #include <iostream>
+#include <cmath>
 
 using namespace threepp;
 
