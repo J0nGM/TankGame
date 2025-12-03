@@ -1,8 +1,18 @@
-Kandidatnr: 10076
+### Kandidatnr: 10076
 
-# Tanks game
-Mappe innlevering/eksamen i Object orienterte 
+# Tank game
+Exam for i Object orientate programmering.
 
+This project is a simple 3D tank game, created using the threepp libary,
+The player controls a tank that can move around an arena, shoot bullets, collect power-ups and fight enemis.
+
+- You drive around in an arena
+- Collect power-ups that is speed boost and ammo
+-Level 1 you need to shoot down all the trees to unlock level 2.
+- A portal take you to level 2
+-In Level 2 you need to destroy all enemy turrets to win the game.
+- You only have 10 HP, if you get hit 10 times you lose the game.
+- If you drive into an enemy turrent you also lose the game.
 
 How to play the game and rules:
 ---------------------------------
@@ -14,24 +24,11 @@ The controls for the tanks are as follows:
 - D - Turn Right
 - Space - Boost
 - E - Shooting bullets
-- R to reload the game (in case of bugs)
+- R - reload the game in case of bugs
 
 Pickup items:
 - Speed boost: Each boost give 5 seconds. It's possible to stack up to max 30 sec.  Yellow sphere to collect.
-- Ammo: Refill your ammo. Green sphere to collect. Get 2 bullets per pickup.
-
-Level 1:
-- Simple arena with walls and obstacles. 
-- Objevts to collect: Speed boost and Ammo. 
-- To unlock level 2, you need to shoot down alle the trees. After that a purpel portal will appear that takes you to level 2.
-
-
-Level 2:
-- More complex arena with same aomunt of walls but diffrent obstacles.
-- Objects to collect are the same as in level 1
-- To win the game you need to shoot down enemy towers. They shoot back at you every 3 seconds.
-- You have 10 HP. If you get hit 10 times, you lose the game.
-- If you destroy all towers you win the game!
+- Ammo: Refill your ammo. Green sphere to collect. Get 4 bullets per pickup.
 
 Good luck and have fun!
 

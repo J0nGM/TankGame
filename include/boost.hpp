@@ -1,6 +1,5 @@
 #ifndef TANK_POWERUP1_HPP
 #define TANK_POWERUP1_HPP
-#include <iostream>
 #include <threepp/threepp.hpp>
 
 

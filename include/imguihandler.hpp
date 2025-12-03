@@ -1,8 +1,6 @@
 #ifndef TANK_IMGUIHANDLER_HPP
 #define TANK_IMGUIHANDLER_HPP
 
-#include "threepp/threepp.hpp"
-
 struct ImGuiContext;
 struct GLFWwindow;
 class game_manger;

@@ -1,9 +1,5 @@
-//
-// Created by L14 G5 on 10/28/2025.
-//
-
-#ifndef TANK_COLLISION_HPP
-#define TANK_COLLISION_HPP
+#ifndef COLLISION_HPP
+#define COLLISION_HPP
 #include "threepp/threepp.hpp"
 
 
@@ -13,4 +9,4 @@ public:
 
 };
 
-#endif //TANK_COLLISION_HPP
+#endif //COLLISION_HPP

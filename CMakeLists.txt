@@ -4,6 +4,14 @@ project(Tank LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# ---- Linux linker-fix for threepp + assimp + pugixml ----
+# På Linux linker vi både libthreepp.a og libassimp.a, som begge inneholder pugixml.
+# Denne opsjonen sier til GNU ld at det er greit med dupliserte symboler.
+if(UNIX AND NOT APPLE)
+    add_link_options("-Wl,--allow-multiple-definition")
+endif()
+# ---------------------------------------------------------
+
 include(FetchContent)
 
 set(THREEPP_BUILD_TESTS OFF)
@@ -37,7 +45,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(assimp)
 
 
-#used https://gist.github.com/jeffamstutz/992723dfabac4e3ffff265eb71a24cd9 for imgui
+# used https://gist.github.com/jeffamstutz/992723dfabac4e3ffff265eb71a24cd9 for imgui
 FetchContent_Declare(
         imgui
         URL https://github.com/ocornut/imgui/archive/docking.zip
@@ -62,8 +70,8 @@ target_link_libraries(imgui_glfw PUBLIC
         glfw
         OpenGL::GL
 )
-#Tried to fix Git-hub actions build error by adding this. It was suggested by AI.
-#Found out that X11 required for ImGui on Linux
+
+# X11 for ImGui på Linux
 if(UNIX AND NOT APPLE)
     find_package(X11 REQUIRED)
     target_link_libraries(imgui_glfw PUBLIC ${X11_LIBRARIES})
@@ -78,7 +86,6 @@ if(GLFW_INCLUDES)
     target_include_directories(imgui_glfw PUBLIC ${GLFW_INCLUDES})
 endif()
 
-
 add_subdirectory(src)
 
 add_executable(TankSim main.cpp)
@@ -87,9 +94,7 @@ target_link_libraries(TankSim PUBLIC TankLib imgui_glfw)
 enable_testing()
 add_subdirectory(tests)
 
-
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-
-
-#Legg til tanrget_compile_definitions(TankSim PRIVATE THREEPP_USE_ASSIMP)
+# Legg til target_compile_definitions(TankSim PRIVATE THREEPP_USE_ASSIMP) hvis du vil
+# ha det definert bare for hovedprogrammet.
