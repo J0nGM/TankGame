@@ -11,9 +11,9 @@ power_up_boost::power_up_boost(Vector3 position) : initial_y_(position.y) {//Fro
     {"emissive", Color::orange},
     {"emissiveIntensity", 0.5f}}); //To make it glow a bit
 
-        mesh_ = Mesh::create(geometry, material);
-        mesh_->position.copy(position);
-        mesh_->castShadow = true;
+    mesh_ = Mesh::create(geometry, material);
+    mesh_->position.copy(position);
+    mesh_->castShadow = true;
 
 }
 

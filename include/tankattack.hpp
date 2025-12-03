@@ -5,8 +5,8 @@ class tank_attack {
 private:
     int ammo_{0};
     const int max_ammo_{10};
-    float shoot_cooldown_{0.0f};
-    float shoot_cooldown_time_{0.5f};
+    float shoot_cooldown_{0.0};
+    float shoot_cooldown_time_{0.5};
 
 public:
     void add_ammo(int amount);

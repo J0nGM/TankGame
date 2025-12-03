@@ -44,27 +44,38 @@ void game_manger::reset_tank_position() {
 }
 
 void game_manger::handle_tank_movement(float dt) {
-        Vector3 old_position = tank_.position;
+    Vector3 old_position = tank_.position;
 
-        const auto &keys = key_input_.get_keys();
-        bool boost_active = keys.space;
-        float boost_mult = tank_movement_.get_boost_multiplier(boost_active);
+    const auto &keys = key_input_.get_keys();
+    bool boost_active = keys.space;
+    float boost_mult = tank_movement_.get_boost_multiplier(boost_active);
 
-        tank_movement_.update(keys, dt, boost_mult);
+    tank_movement_.update(keys, dt, boost_mult);
 
-        Vector3 tank_center = tank_.position;
+    Vector3 tank_center = tank_.position;
 
-        if (level_mgr_.check_wall_collision_sphere(tank_center, collision_radius_)) {
+    //Wall collision
+    if (level_mgr_.check_wall_collision_sphere(tank_center, collision_radius_)) {
         tank_.position.copy(old_position);
-        }
+    }
 
-        if (level_mgr_.get_current_level() == 2) {
+    //Tree collision only for level 1
+    if (level_mgr_.get_current_level() == 1) {
+        threepp::Box3 tank_box;
+        tank_box.setFromCenterAndSize(tank_center, threepp::Vector3(16, 10, 16));
+
+        if (collision_manager::check_tree_collision(tank_box, level_mgr_.get_landscape().objects)) {
+            tank_.position.copy(old_position);
+        }
+    }
+
+    //Barrier collision only for level 2
+    if (level_mgr_.get_current_level() == 2) {
         if (level_mgr_.check_barrier_collision_sphere(tank_center, collision_radius_)) {
             tank_.position.copy(old_position);
         }
     }
 }
-
 
 void game_manger::handle_shooting() {
     const auto &keys = key_input_.get_keys();
@@ -96,11 +107,10 @@ void game_manger::restart_game() {
     reset_tank_position();
     trail_manager_ = std::make_unique<trail_manager>(&scene_);
 
-    level_mgr_.setup_level_1();  //To reset to level 1 after done with level 2
+    level_mgr_.setup_level_1();
 }
 
-void game_manger::handle_menus(imgui_handler& imgui, bool& should_quit) {
-
+void game_manger::handle_menus(imgui_handler &imgui, bool &should_quit) {
     if (game_over_) {
         bool restart = false;
         bool quit = false;
@@ -128,7 +138,6 @@ void game_manger::handle_menus(imgui_handler& imgui, bool& should_quit) {
     }
 }
 
-
 void game_manger::update(float dt) {
     if (game_over_ || victory_) {
         return;
@@ -143,20 +152,18 @@ void game_manger::update(float dt) {
     handle_tank_movement(dt);
     handle_shooting();
 
-
     Vector3 tank_center = tank_.position;
     tank_center.y = tank_collision_center_height_;
 
     auto events = level_mgr_.update_level(dt, tank_center);
 
-//Spawns trail when the tank is moving so that you can see the movement
-    //As assisted me a little with this part
+    //Spawns trail when the tank is moving so that you can see the movement
+    //AI assisted me a little with this part
     if (tank_movement_.get_speed() > min_speed_for_trail_) {
         //Only spawns when the tank moves
         time_since_last_trail_ += dt;
         if (time_since_last_trail_ >= trail_spawn_interval_) {
-
-            //Ai assisted me here. Was struggling to get the right direction for the trail
+            //AI assisted me here. Was struggling to get the right direction for the trail
             Vector3 right(0, 0, 1);
             right.applyQuaternion(tank_.quaternion); //Rotation
             right.normalize();
@@ -170,7 +177,7 @@ void game_manger::update(float dt) {
     //For visualtion of collision sphere
     //sphereHelper_->position.copy(tank_.position);
 
-    //The damged that the trank/player takes
+    //The damage that the tank/player takes
     if (events.player_hit) {
         player_hp_--;
 
@@ -182,27 +189,41 @@ void game_manger::update(float dt) {
     //Powerup pickup
     level_mgr_.get_pickup_manager().check_collisions(tank_center, tank_attack_, tank_movement_);
 
+    //Had some major issue with this part, got some assistance from AI to make it work
     //Level 1 when you are shooting the trees
     if (level_mgr_.get_current_level() == 1) {
         for (auto &bullet: player_bullets_.get_bullets()) {
             if (bullet->is_active()) {
                 Vector3 bullet_pos = bullet->get_position();
 
-                if (collision_manager::check_bullet_tree_collision(
-                    bullet_pos, level_mgr_.get_landscape().objects)) {
+                if (collision_manager::check_bullet_tree_collision(bullet_pos, level_mgr_.get_landscape().objects)) {
                     bullet->deactivate();
                 }
             }
         }
-
-        //Level 2 when you are shooting the enemies
-    } else if (level_mgr_.get_current_level() == 2) {
+    }
+    //Level 2 when you are shooting the enemies
+    else if (level_mgr_.get_current_level() == 2) {
         int enemies_killed = level_mgr_.get_enemy_manager().check_bullet_hits(
             player_bullets_.get_bullets());
 
         if (enemies_killed > 0) {
-
             level_mgr_.get_enemy_manager().remove_dead_enemies(scene_);
+        }
+
+        //Check collision with enemies for instant death
+        for (const auto &enemy: enemies_.get_enemies()) {
+            if (!enemy->is_damaged()) {
+                threepp::Vector3 enemy_pos = enemy->get_position();
+                float dx = tank_center.x - enemy_pos.x;
+                float dz = tank_center.z - enemy_pos.z;
+                float distance = std::sqrt(dx * dx + dz * dz);
+
+                if (distance < 15.0f) {
+                    game_over_ = true;
+                    break;
+                }
+            }
         }
 
         int enemy_count = level_mgr_.get_enemy_manager().get_enemy_count();
@@ -211,6 +232,7 @@ void game_manger::update(float dt) {
             victory_ = true;
         }
     }
+
     //For when entering the portal to go to level 2
     if (events.portal_reached && level_mgr_.get_current_level() == 1) {
         level_mgr_.setup_level_2();

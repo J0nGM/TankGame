@@ -32,8 +32,8 @@ bool enemy::should_shoot() {
 
 void enemy::take_damage() {
     if (is_destroyed) {
-    return;
-}
+        return;
+    }
     hp_--;
     if (hp_ <= 0) {
         is_destroyed = true;

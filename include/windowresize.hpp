@@ -1,5 +1,5 @@
-#ifndef TANK_CAMERA_HPP
-#define TANK_CAMERA_HPP
+#ifndef WINDOW_RESIZE_HPP
+#define WINDOW_RESIZE_HPP
 
 #include <threepp/threepp.hpp>
 
@@ -14,4 +14,4 @@ private:
     threepp::GLRenderer &renderer_;
 };
 
-#endif //TANK_CAMERA_HPP
+#endif WINDOW_RESIZE_HPP

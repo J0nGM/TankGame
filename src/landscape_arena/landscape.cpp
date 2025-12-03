@@ -4,13 +4,11 @@
 using namespace threepp;
 
 
-
 Landscape::Landscape() : Landscape(500.0f) {
 }
 
 //Creating the ground for the landscape
 Landscape::Landscape(float ground_size) {
-
     groundGeometry = PlaneGeometry::create(ground_size, ground_size);
     groundMaterial = MeshStandardMaterial::create({{"color", Color::green}});
     groundMesh = Mesh::create(groundGeometry, groundMaterial);
@@ -38,13 +36,13 @@ Landscape::Landscape(float ground_size) {
     roads.push_back(road2);
 }
 
-    void Landscape::add_tree(threepp::Vector3 position) {
+void Landscape::add_tree(threepp::Vector3 position) {
     auto tree = threepp::Group::create();
 
     auto tree_log_geometry = threepp::CylinderGeometry::create(tree_log_radius_, tree_log_radius_, tree_log_height_);
     auto tree_log_material = threepp::MeshStandardMaterial::create({{"color", threepp::Color::brown}});
     auto tree_log = threepp::Mesh::create(tree_log_geometry, tree_log_material);
-    tree_log->position.y= tree_log_height_ *0.5f;
+    tree_log->position.y = tree_log_height_ * 0.5f;
 
 
     tree_log->castShadow = true;
@@ -55,7 +53,7 @@ Landscape::Landscape(float ground_size) {
         height_of_tree_ * cone_width_,
         height_of_tree_ * cone_height_,
         8
-        );
+    );
     auto tree_cone_material = threepp::MeshStandardMaterial::create({{"color", threepp::Color::green}});
     auto tree_cone = threepp::Mesh::create(tree_cone_geometry, tree_cone_material);
     tree_cone->castShadow = true;
@@ -68,11 +66,10 @@ Landscape::Landscape(float ground_size) {
 }
 
 void Landscape::spawn_trees(
-    threepp::Scene& scene,
+    threepp::Scene &scene,
     std::function<threepp::Vector3(float, float, float)> random_position_func,
     float landscape_width,
     float landscape_depth) {
-
     float half_width = landscape_width / 2.0f;
     float half_depth = landscape_depth / 2.0f;
 
@@ -87,4 +84,3 @@ void Landscape::spawn_trees(
         add_tree(pos);
     }
 }
-

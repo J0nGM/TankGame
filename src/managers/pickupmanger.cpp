@@ -1,13 +1,14 @@
 #include "pickupmanager.hpp"
 #include "tankattack.hpp"
 #include "tankmovment.hpp"
+#include "collisionmanger.hpp"
 #include <iostream>
 
 using namespace threepp;
 
 void pickup_manager::spawn_powerups(Scene& scene, int count, float range_x, float range_z, float height) {
     for (int i = 0; i < count; i++) {
-        float random_x = (rand() % static_cast<int>(range_x * 2)) - range_x;
+        float random_x = (rand() % static_cast<int>(range_x * 2)) - range_x; //AI assisted in finding rand()
         float random_z = (rand() % static_cast<int>(range_z * 2)) - range_z;
 
         auto powerup = std::make_unique<power_up_boost>(Vector3(random_x, height, random_z));

@@ -35,22 +35,22 @@ private:
     bool victory_ {false};
 
     //Tank config
-    static constexpr float tank_spawn_height_ {5.0f};
-    static constexpr float tank_collision_center_height_ {3.0f};
+    static constexpr float tank_spawn_height_ {5.0};
+    static constexpr float tank_collision_center_height_ {3.0};
 
     //Bullet config
-    static constexpr float bullet_spawn_height_offset_ {2.0f};
-    static constexpr float tank_bullet_speed_ {200.0f};
+    static constexpr float bullet_spawn_height_offset_ {2.0};
+    static constexpr float tank_bullet_speed_ {200.0};
 
     //Trail config
     std::unique_ptr<trail_manager>trail_manager_;
-    float time_since_last_trail_ {0.0f};
-    static constexpr float trail_spawn_interval_ {0.1f};
-    static constexpr float min_speed_for_trail_ {0.3f};
+    float time_since_last_trail_ {0.0};
+    static constexpr float trail_spawn_interval_ {0.1};
+    static constexpr float min_speed_for_trail_ {0.3};
 
     //Radius of the sphere used for collision visualization
     std::shared_ptr<threepp::LineSegments> sphereHelper_;
-    float collision_radius_ = 8.0f;
+    float collision_radius_ = 8.0;
 
 public:
     game_manger(
@@ -76,6 +76,7 @@ public:
 private:
     void handle_tank_movement(float dt);
     void handle_shooting();
+    void restart_game();
 };
 
 #endif

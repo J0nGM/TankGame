@@ -13,13 +13,15 @@
 using namespace threepp;
 
 TEST_CASE("Tank creation") {
-    tank tank("../assets/3Dmodell/viecal/Tank.glb");
+    auto scene = Scene::create();
+    tank tank("../assets/3Dmodell/viecal/Tank.glb", *scene);
 
     REQUIRE(tank.mesh != nullptr);
 }
 
 TEST_CASE("Moving forwards") {
-    tank tank("../assets/3Dmodell/viecal/Tank.glb");
+    auto scene = Scene::create();
+    tank tank("../assets/3Dmodell/viecal/Tank.glb", *scene);
     float start_in_Z = tank.mesh->position.z;
     tank.mesh->translateZ(1.0f); // Move forward
 
@@ -98,7 +100,7 @@ TEST_CASE("Enemy takes damage") {
 }
 
 TEST_CASE("Tank collision radius") {
-    tank tank("../assets/3Dmodell/viecal/Tank.glb");
+    tank tank("../assets/3Dmodell/viecal/Tank.glb", *Scene::create());
     Vector3 pos1(0, 0, 0);
     Vector3 pos2(5, 0, 0);
 
@@ -121,7 +123,7 @@ TEST_CASE("Tank cannot shoot without ammo") {
 }
 
 TEST_CASE("Boost stacking") {
-    tank tank_obj("../assets/3Dmodell/viecal/Tank.glb");
+    tank tank_obj("../assets/3Dmodell/viecal/Tank.glb", *Scene::create());
 
 
     tank_movement movement(tank_obj);

@@ -1,21 +1,20 @@
 #ifndef TANK_TANKMOVMENT_HPP
 #define TANK_TANKMOVMENT_HPP
 
-#include "threepp/threepp.hpp"
 #include "tank.hpp"
 #include "keyinputhandler.hpp"
 
 class tank_movement {
 private:
     tank* tank_;
-    float speed_{0.0f};
-    float boost_time_left_{0.0f};
+    float speed_{0.0};
+    float boost_time_left_{0.0};
 
-    static constexpr float max_speed_{80.0f};
-    static constexpr float acceleration_{60.0f};
-    static constexpr float deceleration_{120.0f};
-    static constexpr float turn_speed_{2.5f};
-    static constexpr float boost_multiplier_{4.0f};
+    static constexpr float max_speed_{80.0};
+    static constexpr float acceleration_{60.0};
+    static constexpr float deceleration_{120.0};
+    static constexpr float turn_speed_{2.5};
+    static constexpr float boost_multiplier_{4.0};
 
 public:
     explicit tank_movement(tank& tank_obj);

@@ -12,11 +12,11 @@ Camera_follow::Camera_follow(PerspectiveCamera &camera, Object3D &target,
 }
 
 void Camera_follow::update(float dt) {
-    const auto& keys = controls_.get_keys();
+    const auto &keys = controls_.get_keys();
 
     float dynamic_distance = base_offset_.x;
 
-    // Adjust camera distance based on movement
+    //Adjust camera distance based on movement
     if (keys.up || keys.down) {
         dynamic_distance = (keys.up) ? max_distanse_ : min_distanse_;
     }
@@ -35,7 +35,7 @@ void Camera_follow::update(float dt) {
 }
 
 void Camera_follow::set_delay(float seconds) {
-    // Implementation for delay if needed
+    //Implementation for delay if needed
 }
 
 void Camera_follow::set_offset(const Vector3 &offset) {

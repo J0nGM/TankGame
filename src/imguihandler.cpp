@@ -40,14 +40,15 @@ void imgui_handler::begin_frame() {
 }
 
 void imgui_handler::game_over_menu(bool &restart_game, bool &quit_game) {
-    ImGuiIO& io = ImGui::GetIO();
+    ImGuiIO &io = ImGui::GetIO();
     //To center the window after game over or win
     ImVec2 center(io.DisplaySize.x * 0.5f, io.DisplaySize.y * 0.5f);
     ImVec2 window_size(400, 200);
     ImGui::SetNextWindowPos(ImVec2(center.x - window_size.x * 0.5f, center.y - window_size.y * 0.5f), ImGuiCond_Always);
     ImGui::SetNextWindowSize(window_size, ImGuiCond_Always);
 
-    ImGui::Begin("Game Over", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+    ImGui::Begin("Game Over", nullptr,
+                 ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
     ImGui::SetCursorPosY(50);
     ImGui::Text("Game Over");
@@ -87,8 +88,8 @@ void imgui_handler::render_ui(game_manger &game) {
     //Boost Bar
     float boost_time = game.get_boost_time_left();
     ImGui::Text("Boost Time: %.1fs", boost_time);
-    float boost_ratio = boost_time / 30.0f;  // Assuming max 30 seconds
-    ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(1.0f, 1.0f, 0.0f, 1.0f));  // Yellow
+    float boost_ratio = boost_time / 30.0f; // Assuming max 30 seconds
+    ImGui::PushStyleColor(ImGuiCol_PlotHistogram, ImVec4(1.0f, 1.0f, 0.0f, 1.0f)); // Yellow
     ImGui::ProgressBar(boost_ratio, ImVec2(200.0f, 0.0f));
     ImGui::PopStyleColor();
 
@@ -116,14 +117,15 @@ void imgui_handler::render_ui(game_manger &game) {
 
 //THe menu that shows up when player wins or looses
 void imgui_handler::victory_menu(bool &next_level, bool &quit_game) {
-    ImGuiIO& io = ImGui::GetIO();
+    ImGuiIO &io = ImGui::GetIO();
     //To center the window after  win
     ImVec2 center(io.DisplaySize.x * 0.5f, io.DisplaySize.y * 0.5f);
     ImVec2 window_size(400, 200);
     ImGui::SetNextWindowPos(ImVec2(center.x - window_size.x * 0.5f, center.y - window_size.y * 0.5f), ImGuiCond_Always);
     ImGui::SetNextWindowSize(window_size, ImGuiCond_Always);
 
-    ImGui::Begin("Victory!", nullptr, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
+    ImGui::Begin("Victory!", nullptr,
+                 ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoCollapse);
 
     ImGui::SetCursorPosY(50);
     ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "VICTORY!");

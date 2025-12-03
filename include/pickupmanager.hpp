@@ -4,10 +4,8 @@
 #include "threepp/threepp.hpp"
 #include "boost.hpp"
 #include "ammo.hpp"
-#include "collisionmanger.hpp"
 #include <vector>
 #include <memory>
-#include <functional>
 
 class tank_attack;
 class tank_movement;
@@ -17,7 +15,7 @@ private:
     std::vector<std::unique_ptr<power_up_boost> > powerups_;
     std::vector<std::unique_ptr<ammo> > ammo_;
 
-    static constexpr float pickup_collection_radius_ {5.0f};
+    static constexpr float pickup_collection_radius_ {5.0};
 
 public:
     void spawn_powerups(threepp::Scene& scene, int count, float range_x, float range_z, float height);

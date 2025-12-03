@@ -18,7 +18,7 @@ public:
     obsticale_lvl2(const threepp::Vector3& position, obsticale_type_lvl_2 type);
 
     std::shared_ptr<threepp::Mesh> get_mesh() const { return mesh_;}
-        threepp::Vector3 get_position() const { return position_; }
+    threepp::Vector3 get_position() const { return position_; }
     obsticale_type_lvl_2 get_type() const { return type_; }
 };
 

@@ -7,7 +7,7 @@
 class power_up_boost {
 private:
     std::shared_ptr<threepp::Mesh> mesh_;
-    float time_ {0.0f};
+    float time_ {0.0};
     float initial_y_;
     bool collected_ {false};
 
@@ -15,7 +15,7 @@ public:
     power_up_boost(threepp::Vector3 position);
 
     void update(float dt);
-    //Fikk hjelp av Ai for å lage en is_collcted funksjon
+
     bool is_collected() const { return collected_;}
     void collect() {
         collected_ = true;
@@ -27,7 +27,4 @@ public:
     threepp::Vector3 get_Position() const { return mesh_->position; }
 
 };
-
-
-
 #endif //TANK_POWERUP1_HPP

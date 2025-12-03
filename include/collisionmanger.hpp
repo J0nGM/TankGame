@@ -9,15 +9,15 @@ class obstacle_manger_lvl2;
 
 class collision_manager {
 public:
-    static constexpr float enemy_hit_radius {20.0f};
-    static constexpr float player_hit_radius {5.0f};
-    static constexpr float pickup_collect_radius {5.0f};
-    static constexpr float portal_activate_radius {10.0f};
+    static constexpr float enemy_hit_radius {20.0};
+    static constexpr float player_hit_radius {5.0};
+    static constexpr float pickup_collect_radius {5.0};
+    static constexpr float portal_activate_radius {10.0};
 
-    static constexpr float tree_collision_padding {3.0f};
+    static constexpr float tree_collision_padding {3.0};
 
-    static constexpr float bullet_tree_collision_distance {10.0f};
-    static constexpr float bullet_barrier_collision_radius {5.0f};
+    static constexpr float bullet_tree_collision_distance {10.0};
+    static constexpr float bullet_barrier_collision_radius {5.0};
 
 
     static bool check_tree_collision(
@@ -37,7 +37,7 @@ public:
     static bool check_bullet_tree_collision(
     const threepp::Vector3& bullet_pos,
     const std::vector<std::shared_ptr<threepp::Group>>& objects,
-    float collision_distance = 10.0f);
+    float collision_distance = 10.0);
 
     static bool check_bullet_enemy_collision(
         const threepp::Box3& bullet_box,

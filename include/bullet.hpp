@@ -7,8 +7,8 @@ class bullet {
 private:
     std::shared_ptr<threepp::Mesh> mesh_;
     threepp::Vector3 velocity_;
-    float life_time_ {0.0f};
-    float max_life_time_ {5.0f};
+    float life_time_ {0.0};
+    float max_life_time_ {5.0};
     bool active_ {true};
 
 public:

@@ -23,5 +23,5 @@ ammo::ammo(Vector3 position) : initla_y_(position.y){
 void ammo::update(float dt){
     lifetime_ += dt;
     mesh_->rotation.y += 2*dt;
-    mesh_->position.y = initla_y_ + std::sin(lifetime_)*1.5f;
+    mesh_->position.y = initla_y_ + std::sin(lifetime_)*1.5f;//Makes pickup move up and down
 }

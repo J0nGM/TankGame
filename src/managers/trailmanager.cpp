@@ -53,6 +53,7 @@ void trail_manager::add_trail(const threepp::Vector3 &position, const threepp::V
 }
 
 void trail_manager::update(float dt) {
+    //Got AI assistance here
     for (auto it = segments_.begin(); it != segments_.end();) {
         it->life_time -= dt;
 

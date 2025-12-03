@@ -4,7 +4,6 @@
 using namespace threepp;
 
 bullet::bullet(Vector3 position, Vector3 direction, float speed) {
-
     auto geomerty = SphereGeometry::create(0.5f, 8, 8);
     auto material = MeshPhongMaterial::create();
     material->color = Color::red;

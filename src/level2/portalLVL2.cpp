@@ -14,7 +14,7 @@ portal_lvl2::portal_lvl2(Vector3 position) {
     mesh_->position.copy(position);
     mesh_->castShadow = true;
 }
-//Got some assist from AI with this part
+
 void portal_lvl2::update(float dt) {
     time_ += dt;
     mesh_->rotation.y += 1.0f * dt;

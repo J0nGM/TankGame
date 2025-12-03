@@ -7,6 +7,6 @@ class tank : public threepp::Object3D {
 public:
     std::shared_ptr<threepp::Mesh> mesh = threepp::Mesh::create();
 
-    tank(const std::string &path);
+    tank(const std::string &path, threepp::Scene& scene);
 };
 

@@ -7,7 +7,7 @@ class portal_lvl2 {
 private:
     std::shared_ptr<threepp::Mesh>mesh_;
     bool activated_{false};
-    float time_{0.0f};
+    float time_{0.0};
 
 public:
     portal_lvl2(threepp::Vector3 position);

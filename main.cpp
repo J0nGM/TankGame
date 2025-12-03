@@ -11,23 +11,23 @@
 
 using namespace threepp;
 
-void setup_scene(Scene& scene) {
+void setup_scene(Scene &scene) {
     scene.background = Color::aliceblue;
     auto light = HemisphereLight::create(0xffffbb, 0x080820);
     scene.add(light);
 }
 
-void setup_landscape(Scene& scene, Landscape& land) {
+void setup_landscape(Scene &scene, Landscape &land) {
     land.groundMesh->position.y = -0.5f;
     land.groundMesh->receiveShadow = true;
     scene.add(land.groundMesh);
 
-    for (const auto& road : land.roads) {
+    for (const auto &road: land.roads) {
         scene.add(road);
     }
 }
 
-void setup_tank(Scene& scene, tank& tank) {
+void setup_tank(Scene &scene, tank &tank) {
     tank.position.y = 5.0f;
     scene.add(tank);
 }
@@ -45,20 +45,19 @@ int main() {
     auto scene = Scene::create();
     setup_scene(*scene);
 
-    tank tank("../assets/3Dmodell/viecal/Tank.glb");
-    setup_tank(*scene, tank);
+    tank player_tank("../assets/3Dmodell/viecal/Tank.glb", *scene);
 
     key_input_handler key_controls;
     canvas.addKeyListener(key_controls);
 
-    Camera_follow camera_follow(camera, tank, key_controls, Vector3(60, 20, 0));
+    Camera_follow camera_follow(camera, player_tank, key_controls, Vector3(60, 20, 0));
 
     Landscape land;
     setup_landscape(*scene, land);
-    
+
     game_manger game(
         *scene,
-        tank,
+        player_tank,
         key_controls,
         camera_follow,
         land,
@@ -70,7 +69,7 @@ int main() {
     );
 
     imgui_handler imgui;
-    imgui.init(reinterpret_cast<GLFWwindow*>(canvas.windowPtr()));
+    imgui.init(reinterpret_cast<GLFWwindow *>(canvas.windowPtr()));
 
     Clock clock;
     canvas.animate([&] {

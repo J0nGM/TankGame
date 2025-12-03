@@ -7,10 +7,10 @@ private:
     std::shared_ptr<threepp::Mesh> mesh_;
     threepp::Vector3 position_;
     float shoot_timer_{0};
-    const float shoot_intreval_{3.5f};
+    const float shoot_intreval_{3.5};
     int hp_{1};
     bool is_destroyed{false};
-    const float bullet_height_enemy_{2.0f};
+    const float bullet_height_enemy_{2.0};
 
 
 public:

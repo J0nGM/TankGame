@@ -51,13 +51,13 @@ void level_manger::setup_level_1() {
     }
 
     //Level 1
-    arena_.add_walls_to_scene(scene_, level1_arena_walls_size_);//arnea size. Located in the hpp
+    arena_.add_walls_to_scene(scene_, level1_arena_walls_size_); //arnea size. Located in the hpp
 
     pickups_.clear(scene_);
 
-    pickups_.spawn_powerups(scene_, level1_powerups, level1_spawn_range, level1_spawn_range, pickup_height);
+    pickups_.spawn_powerups(scene_, level1_powerups_, level1_spawn_range, level1_spawn_range, pickup_height);
 
-    pickups_.spawn_ammo(scene_, level1_ammo, level1_spawn_range, level1_spawn_range, pickup_height);
+    pickups_.spawn_ammo(scene_, level1_ammo_, level1_spawn_range, level1_spawn_range, pickup_height);
 }
 
 
@@ -65,7 +65,7 @@ void level_manger::setup_level_2() {
     current_level_ = 2;
     clean_current_level();
 
-    //Chose to make a new landscape for level 2 that is based on sand terrain
+    //only a new ground so you can see that you're in lvl 2
     landscape2_ = std::make_unique<Landscape2>();
     scene_.add(landscape2_->groundMesh);
     for (auto &road: landscape2_->roads) {
@@ -77,10 +77,10 @@ void level_manger::setup_level_2() {
     obstacles_.spawn_barriers_randomly(scene_, random_pos_func_);
     obstacles_.add_to_scene(scene_);
 
-    pickups_.spawn_powerups(scene_, level2_powerups, level2_spawn_range, level2_spawn_range, pickup_height);
-    pickups_.spawn_ammo(scene_, level2_ammo, level2_spawn_range, level2_spawn_range, pickup_height);
+    pickups_.spawn_powerups(scene_, level2_powerups_, level2_spawn_range_, level2_spawn_range_, pickup_height);
+    pickups_.spawn_ammo(scene_, level2_ammo_, level2_spawn_range_, level2_spawn_range_, pickup_height);
 
-    enemies_.spawn_enemies(scene_, level2_enemies, level2_spawn_range, level2_spawn_range);
+    enemies_.spawn_enemies(scene_, level2_enemies_, level2_spawn_range_, level2_spawn_range_);
 
     float landscape_size = 750.0f;
     landscape2_->spawn_trees(scene_, random_pos_func_, landscape_size, landscape_size);
@@ -171,11 +171,12 @@ bool level_manger::all_trees_destroyed() const {
     return true;
 }
 
-//Check collisions with walls in arena
+
 bool level_manger::enemies_all_destroyed() const {
     return (current_level_ == 2) ? enemies_.all_destroyed() : false;
 }
 
+//Check collisions with walls in arena
 bool level_manger::check_wall_collision_sphere(const Vector3 &center, float radius) const {
     return collision_manager::check_wall_collision_sphere(center, radius, arena_);
 }

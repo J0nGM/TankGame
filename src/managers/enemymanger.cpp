@@ -124,8 +124,8 @@ void enemy_manager::remove_dead_enemies(Scene& scene) {
         std::remove_if(enemies_.begin(), enemies_.end(),
             [&scene](const std::unique_ptr<enemy>& enemy) {
                 if (enemy->is_damaged()) {
-                    scene.remove(*enemy->get_mesh());  // Remove from scene
-                    return true;  // Remove from vector
+                    scene.remove(*enemy->get_mesh());
+                    return true;
                 }
                 return false;
             }),
