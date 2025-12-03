@@ -8,6 +8,7 @@ public:
 
     void add_trail(const threepp::Vector3& position, const threepp::Vector3& right_direction);
     void update(float dt);
+    void clear();
 
 private:
     threepp::Scene* scene_;

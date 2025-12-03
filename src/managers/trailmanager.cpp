@@ -74,3 +74,9 @@ void trail_manager::update(float dt) {
         }
     }
 }
+void trail_manager::clear() {
+    for (auto& segment : segments_) {
+        scene_->remove(*segment.mesh);
+    }
+    segments_.clear();
+}
