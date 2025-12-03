@@ -1,7 +1,9 @@
 ### Kandidatnr: 10076
 
 # Tank game
-Exam for i Object orientate programmering.
+___
+
+Exam for i Object-Oriented Programming.
 
 This project is a simple 3D tank game, created using the threepp libary
 The player controls a tank that can move around an arena, shoot bullets, collect power-ups and fight enemis
@@ -16,7 +18,6 @@ The player controls a tank that can move around an arena, shoot bullets, collect
 
 How to play the game and rules:
 ---------------------------------
-
 The controls for the tanks are as follows:
 - W - Move Forwards
 - S - Move Backwards
@@ -24,7 +25,7 @@ The controls for the tanks are as follows:
 - D - Turn Right
 - Space - Boost
 - E - Shooting bullets
-- R - reload the game in case of bugs
+- R - Reload the game in case of bugs
 
 Pickup items:
 - Speed boost: Each boost give 5 seconds. It's possible to stack up to max 30 sec.  Yellow sphere to collect
@@ -33,15 +34,15 @@ Pickup items:
 Good luck and have fun!
 
 <p align="center">
-  <img src="./JPG_and_GIF/GIF_quike_gameplay.GIF" alt="Simplified UML Class Diagram of the Project" width="900">
+  <img src="./JPG_and_GIF/GIF_quike_gameplay.GIF" alt="Gameplay Demo" width="900">
   <br>
-  <i>Level 1: Shooting trees and collecting power-ups</i>
+  <i>Gameplay Demo</i>
 </p>
 
 <p align="center">
-  <img src="./JPG_and_GIF/ULM_picture.png" alt="Gameplay Demo" width="900">
+  <img src="./JPG_and_GIF/ULM_picture.png" alt="UML overview" width="900">
   <br>
-  <i>Level 1: Shooting trees and collecting power-ups</i>
+  <i>Simplified UML Class Diagram of the Project</i>
 </p>
 
 
@@ -49,7 +50,7 @@ Good luck and have fun!
 ### Own evaluation:
 
 #### What is good:
-- What I'm most proud of in this project is the shooting mechanic and the reloading of ammo
+- What I think is good is how the shooting mechanic and the reloading of ammo
 - I also like that it's possible to stack the boost
 - The auto aim on the enemy turrets is also something I'm happy with. Makes it more challenging
 
@@ -58,8 +59,9 @@ Good luck and have fun!
 
 #### What can be improved:
 - The tank movement could be smoother and more responsive. Also inmport bullet physics to make it more realistic
+- Better collision detection between the tank, bullets and other objects in the game
 - The level design could be more varied and interesting, with different themes and challenges
-- Adding sound effects enhance the gaming experience
+- Adding sound effects creat a better the gaming experience
 - Have a better 3D model for the tank. One that actually can have rotations on the belt, so that it would look more realstic
 - More detailed textures and enviroment to make the game more immersive
 - Have a diffrent type of look on the enemies turrents
